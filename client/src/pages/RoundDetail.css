@@ -1,0 +1,162 @@
+.round-detail-page .round-header {
+  margin-bottom: 1.5rem;
+}
+
+.round-detail-page .back {
+  color: var(--accent);
+  font-size: 0.9rem;
+  margin-bottom: 0.5rem;
+  display: inline-block;
+}
+
+.round-detail-page h1 {
+  font-size: 1.5rem;
+  margin-bottom: 0.25rem;
+}
+
+.countdown {
+  color: var(--accent);
+  font-weight: 600;
+}
+
+.upload-zone {
+  padding: 2rem;
+  background: var(--card);
+  border: 2px dashed var(--border);
+  border-radius: 12px;
+  text-align: center;
+  margin-bottom: 1.5rem;
+}
+
+.upload-zone p {
+  margin-bottom: 1rem;
+  color: var(--text-muted);
+}
+
+.submitted-badge {
+  color: var(--success);
+  margin-bottom: 1rem;
+}
+
+.albums-list h3 {
+  font-size: 1rem;
+  margin-bottom: 0.75rem;
+  color: var(--text-muted);
+}
+
+.album-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  margin-bottom: 0.5rem;
+}
+
+.album-preview {
+  width: 64px;
+  height: 64px;
+  border-radius: 8px;
+  background: var(--secondary);
+  overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.album-preview img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.album-info {
+  flex: 1;
+}
+
+.star-count {
+  margin-left: 0.5rem;
+  color: var(--accent);
+}
+
+.vote-stars button {
+  padding: 0.25rem;
+  color: var(--text-muted);
+  font-size: 1.2rem;
+  transition: color 0.2s;
+}
+
+.vote-stars button:hover,
+.vote-stars button.active {
+  color: #ffc107;
+}
+
+.lightbox {
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,0.9);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+}
+
+.lightbox-content {
+  max-width: 90vw;
+  max-height: 90vh;
+}
+
+.lightbox-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  color: var(--text);
+  margin-bottom: 0.5rem;
+}
+
+.lightbox-header button {
+  color: var(--text);
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.slide-container {
+  position: relative;
+}
+
+.slide-container img {
+  max-width: 100%;
+  max-height: 70vh;
+  object-fit: contain;
+}
+
+.nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  background: rgba(255,255,255,0.2);
+  color: white;
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  font-size: 2rem;
+  line-height: 1;
+}
+
+.nav.prev { left: -60px; }
+.nav.next { right: -60px; }
+
+.nav:disabled {
+  opacity: 0.3;
+  cursor: not-allowed;
+}
+
+.slide-counter {
+  text-align: center;
+  margin-top: 0.5rem;
+  color: var(--text-muted);
+}

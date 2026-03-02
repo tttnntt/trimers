@@ -1,0 +1,54 @@
+:root {
+  --primary: #0a1612;
+  --primary-light: #0d1f1a;
+  --secondary: #1a3d32;
+  --secondary-mid: #2d5a4a;
+  --accent: #3d7a65;
+  --text: #e8f0ed;
+  --text-muted: #9cb5ab;
+  --card: #0f201b;
+  --border: #1a3d32;
+  --error: #e57373;
+  --success: #81c784;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html, body, #root {
+  height: 100%;
+  min-height: 100%;
+}
+
+body {
+  font-family: 'Space Grotesk', system-ui, -apple-system, sans-serif;
+  background: var(--primary);
+  color: var(--text);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  overflow-x: hidden;
+}
+
+a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+button {
+  font-family: inherit;
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+input, textarea {
+  font-family: inherit;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+}

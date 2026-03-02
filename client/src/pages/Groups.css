@@ -1,0 +1,84 @@
+.groups-page .groups-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1.5rem;
+}
+
+.groups-page h1 {
+  font-size: 1.5rem;
+}
+
+.btn-primary {
+  padding: 0.5rem 1rem;
+  background: var(--secondary);
+  color: var(--text);
+  border-radius: 8px;
+  font-weight: 600;
+  transition: background 0.2s;
+}
+
+.btn-primary:hover {
+  background: var(--secondary-mid);
+}
+
+.empty-state {
+  text-align: center;
+  padding: 3rem;
+  color: var(--text-muted);
+}
+
+.empty-state .btn-primary {
+  display: inline-block;
+  margin-top: 1rem;
+}
+
+.group-list {
+  display: flex;
+  flex-direction: column;
+  gap: 0.5rem;
+}
+
+.group-row {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding: 1rem;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  color: var(--text);
+  transition: border-color 0.2s;
+}
+
+.group-row:hover {
+  border-color: var(--accent);
+}
+
+.group-row .group-avatar {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: var(--secondary);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 700;
+  overflow: hidden;
+}
+
+.group-row .group-avatar img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.group-info {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.group-row .arrow {
+  color: var(--text-muted);
+}

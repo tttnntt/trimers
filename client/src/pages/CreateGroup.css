@@ -1,0 +1,29 @@
+.create-group-page h1 {
+  margin-bottom: 1.5rem;
+}
+
+.create-form {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  max-width: 400px;
+}
+
+.create-form input {
+  padding: 0.875rem 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text);
+  font-size: 1rem;
+}
+
+.create-form input:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.btn-full {
+  width: 100%;
+  padding: 0.875rem;
+}

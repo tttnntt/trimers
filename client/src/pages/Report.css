@@ -1,0 +1,14 @@
+.report-page h1 { margin-bottom: 0.5rem; }
+.report-page .subtitle { color: var(--text-muted); margin-bottom: 1.5rem; }
+.report-form { display: flex; flex-direction: column; gap: 1rem; max-width: 400px; }
+.report-form label { font-size: 0.9rem; color: var(--text-muted); }
+.report-form textarea {
+  padding: 1rem;
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  background: var(--card);
+  color: var(--text);
+  resize: vertical;
+}
+.success-msg { max-width: 400px; }
+.success-msg .btn-primary { display: inline-block; margin-top: 1rem; }
