@@ -33,7 +33,7 @@ The app is split into:
    npm run dev
    ```
 
-6. Open `http://localhost:5173` in your browser. The React app mounts into the `<div id="root">` element and behaves as a PWA (installable, offline-capable, and with push notification support where configured).
+6. Open `https://trimers-dot-com.onrender.com` in your browser. The React app mounts into the `<div id="root">` element and behaves as a PWA (installable, offline-capable, and with push notification support where configured).
 
 ## Production build
 

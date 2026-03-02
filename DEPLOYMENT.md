@@ -27,7 +27,7 @@ Verify it runs locally:
 node dist/index.js
 ```
 
-You should see “Trimers API running on port 3001” and be able to hit `http://localhost:3001/api/health`.
+You should see “Trimers API running on port 3001” and be able to hit `https://trimers-dot-com.onrender.com/api/health`.
 
 ### 1.2. Required environment variables
 
@@ -101,7 +101,7 @@ If you prefer another provider (Railway, Fly.io, etc.), use the same build + sta
 
 ### 2.1. Configure API base URL (if needed)
 
-By default, the Vite dev server proxies `/api` to `http://localhost:3001`.  
+By default, the Vite dev server proxies `/api` to `https://trimers-dot-com.onrender.com`.  
 In production, you want `/api` to point at your deployed backend, e.g. `https://trimers-api.onrender.com`.
 
 Simplest option on Vercel/Netlify:
