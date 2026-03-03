@@ -1,8 +1,13 @@
 const rawBase = import.meta.env.VITE_API_BASE_URL || '/api';
-export const API_BASE =
+const normalizedBase =
   rawBase.startsWith('http') && !rawBase.endsWith('/api')
     ? rawBase.replace(/\/?$/, '') + '/api'
     : rawBase;
+// On Vercel, always use /api so the proxy forwards to Render (avoids CORS)
+export const API_BASE =
+  typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')
+    ? '/api'
+    : normalizedBase;
 const API = API_BASE;
 
 function getToken(): string | null {
