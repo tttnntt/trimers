@@ -1,5 +1,6 @@
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { API_BASE } from '../api/client';
 import './Layout.css';
 
 export default function Layout({ children }: { children: React.ReactNode }) {
@@ -31,7 +32,7 @@ export default function Layout({ children }: { children: React.ReactNode }) {
         {user && (
           <Link to="/settings" className="user-avatar">
             {user.profile_picture ? (
-              <img src="/api/users/avatar" alt="" /> 
+              <img src={`${API_BASE}/users/avatar`} alt="" /> 
             ) : (
               <span>{user.username?.[0] || user.email[0]}</span>
             )}

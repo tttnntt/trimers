@@ -1,7 +1,7 @@
 import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
-import { usersApi } from '../api/client';
+import { usersApi, API_BASE } from '../api/client';
 import './ProfileSetup.css';
 
 export default function ProfileSetup() {
@@ -57,7 +57,7 @@ export default function ProfileSetup() {
           {error && <div className="auth-error">{error}</div>}
           <div className="avatar-upload" onClick={() => fileRef.current?.click()}>
             {user?.profile_picture ? (
-              <img src="/api/users/avatar" alt="" /> 
+              <img src={`${API_BASE}/users/avatar`} alt="" /> 
             ) : (
               <span>+ Add photo</span>
             )}

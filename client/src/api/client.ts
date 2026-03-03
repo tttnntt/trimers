@@ -1,4 +1,5 @@
-const API = '/api';
+export const API_BASE = import.meta.env.VITE_API_BASE_URL || '/api';
+const API = API_BASE;
 
 function getToken(): string | null {
   return localStorage.getItem('trimers_token');

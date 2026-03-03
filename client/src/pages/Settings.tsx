@@ -2,7 +2,7 @@ import { useState, useRef } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { usePushNotifications } from '../hooks/usePushNotifications';
-import { usersApi } from '../api/client';
+import { usersApi, API_BASE } from '../api/client';
 import './Settings.css';
 
 export default function Settings() {
@@ -58,7 +58,7 @@ export default function Settings() {
         <div className="avatar-section">
           <div className="avatar-wrap" onClick={() => fileRef.current?.click()}>
             {user?.profile_picture ? (
-              <img src={`/api/users/avatar`} alt="" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
+              <img src={`${API_BASE}/users/avatar`} alt="" onError={(e) => { (e.target as HTMLImageElement).style.display = 'none'; }} />
             ) : (
               <span>{user?.username?.[0] || user?.email?.[0] || '?'}</span>
             )}
