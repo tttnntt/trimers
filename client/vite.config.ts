@@ -7,7 +7,7 @@ export default defineConfig({
     react(),
     VitePWA({
       registerType: 'autoUpdate',
-      includeAssets: ['favicon.svg', 'logo.svg'],
+      includeAssets: ['favicon.svg', 'logo.svg', 'icon-192.png', 'icon-512.png'],
       manifest: {
         name: 'Trimers',
         short_name: 'Trimers',
