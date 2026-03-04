@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useServerHealth } from '../hooks/useServerHealth';
 import './Auth.css';
 
 export default function Login() {
@@ -10,6 +11,7 @@ export default function Login() {
   const [loading, setLoading] = useState(false);
   const { login } = useAuth();
   const navigate = useNavigate();
+  const { ready } = useServerHealth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -31,6 +33,7 @@ export default function Login() {
         <h1 className="auth-logo">trimers</h1>
         <p className="auth-subtitle">Sign in to continue</p>
         <form onSubmit={handleSubmit} className="auth-form">
+          {!ready && <div className="auth-hint">If sign in fails, the server may be starting. Wait a moment and try again.</div>}
           {error && <div className="auth-error">{error}</div>}
           <input
             type="email"

@@ -1,6 +1,7 @@
 import { useState } from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
+import { useServerHealth } from '../hooks/useServerHealth';
 import './Auth.css';
 
 export default function Register() {
@@ -11,6 +12,7 @@ export default function Register() {
   const [loading, setLoading] = useState(false);
   const { register } = useAuth();
   const navigate = useNavigate();
+  const { ready } = useServerHealth();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -40,6 +42,7 @@ export default function Register() {
         <h1 className="auth-logo">trimers</h1>
         <p className="auth-subtitle">Create your account</p>
         <form onSubmit={handleSubmit} className="auth-form">
+          {!ready && <div className="auth-hint">If sign up fails, the server may be starting. Wait a moment and try again.</div>}
           {error && <div className="auth-error">{error}</div>}
           <input
             type="email"

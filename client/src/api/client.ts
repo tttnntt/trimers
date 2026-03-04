@@ -20,7 +20,9 @@ type ApiOptions = Omit<RequestInit, 'body'> & {
 
 const isRetryable = (status: number) => status === 502 || status === 503 || status === 504;
 
-async function apiFetch<T>(path: string, opts: ApiOptions, retries = 2): Promise<T> {
+const RETRY_DELAYS = [3000, 6000, 10000, 15000];
+
+async function apiFetch<T>(path: string, opts: ApiOptions, retries = 4): Promise<T> {
   const token = getToken();
   const headers: Record<string, string> = {
     Accept: 'application/json',
@@ -35,17 +37,29 @@ async function apiFetch<T>(path: string, opts: ApiOptions, retries = 2): Promise
   const data = await res.json().catch(() => ({}));
 
   if (!res.ok) {
-    if (isRetryable(res.status) && retries > 0) {
-      await new Promise((r) => setTimeout(r, 2000));
+    const attempt = 4 - retries;
+    if (isRetryable(res.status) && retries > 0 && attempt < RETRY_DELAYS.length) {
+      await new Promise((r) => setTimeout(r, RETRY_DELAYS[attempt]));
       return apiFetch<T>(path, opts, retries - 1);
     }
     const msg = res.status === 503 || res.status === 502
       ? 'Server is starting up. Please try again in a moment.'
-      : (data.error || res.statusText || 'Request failed');
+      : res.status === 401
+        ? (data.error || 'Invalid email or password')
+        : (data.error || res.statusText || 'Request failed');
     throw new Error(msg);
   }
 
   return data as T;
+}
+
+export async function checkHealth(): Promise<boolean> {
+  try {
+    const res = await fetch(`${API}/health`);
+    return res.ok;
+  } catch {
+    return false;
+  }
 }
 
 export async function api<T>(path: string, opts: ApiOptions = {}): Promise<T> {
