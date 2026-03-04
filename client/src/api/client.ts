@@ -27,9 +27,9 @@ type ApiOptions = Omit<RequestInit, 'body'> & {
 
 const isRetryable = (status: number) => status === 502 || status === 503 || status === 504;
 
-const RETRY_DELAYS = [3000, 6000, 10000, 15000];
+const RETRY_DELAYS = [5000, 8000, 10000, 12000, 15000, 15000, 15000, 15000];
 
-async function apiFetch<T>(path: string, opts: ApiOptions, retries = 4): Promise<T> {
+async function apiFetch<T>(path: string, opts: ApiOptions, retries = 8): Promise<T> {
   const token = getToken();
   const headers: Record<string, string> = {
     Accept: 'application/json',
@@ -44,13 +44,13 @@ async function apiFetch<T>(path: string, opts: ApiOptions, retries = 4): Promise
   const data = await res.json().catch(() => ({}));
 
   if (!res.ok) {
-    const attempt = 4 - retries;
+    const attempt = 8 - retries;
     if (isRetryable(res.status) && retries > 0 && attempt < RETRY_DELAYS.length) {
       await new Promise((r) => setTimeout(r, RETRY_DELAYS[attempt]));
       return apiFetch<T>(path, opts, retries - 1);
     }
     const msg = res.status === 503 || res.status === 502
-      ? 'Server is starting up. Please try again in a moment.'
+      ? 'Server is starting up. Wait 30 seconds and try again.'
       : res.status === 401
         ? (data.error || 'Invalid email or password')
         : (data.error || res.statusText || 'Request failed');
