@@ -1,13 +1,20 @@
+const BACKEND_URL = 'https://trimers-dot-com.onrender.com/api';
 const rawBase = import.meta.env.VITE_API_BASE_URL || '/api';
 const normalizedBase =
   rawBase.startsWith('http') && !rawBase.endsWith('/api')
     ? rawBase.replace(/\/?$/, '') + '/api'
     : rawBase;
-// On Vercel, always use /api so the proxy forwards to Render (avoids CORS)
-export const API_BASE =
-  typeof window !== 'undefined' && window.location.hostname.includes('vercel.app')
-    ? '/api'
-    : normalizedBase;
+
+function resolveApiBase(): string {
+  if (typeof window === 'undefined') return normalizedBase;
+  const host = window.location.hostname;
+  if (host.includes('vercel.app')) return '/api';
+  if (host.includes('onrender.com') && !host.startsWith('trimers-dot-com'))
+    return BACKEND_URL;
+  return normalizedBase;
+}
+
+export const API_BASE = resolveApiBase();
 const API = API_BASE;
 
 function getToken(): string | null {
