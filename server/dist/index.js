@@ -35,17 +35,32 @@ app.use((0, express_rate_limit_1.default)({
     max: 200,
     message: { error: 'Too many requests' }
 }));
+app.use('/api', (req, res, next) => {
+    if (req.path === '/health')
+        return next();
+    if (!dbReady)
+        return res.status(503).json({ error: 'Server initializing, try again in a moment' });
+    next();
+});
 app.use('/api/auth', auth_js_1.authRouter);
 app.use('/api/users', users_js_1.usersRouter);
 app.use('/api/groups', groups_js_1.groupsRouter);
 app.use('/api/albums', albums_js_1.albumsRouter);
 app.use('/api/push', push_js_1.pushRouter);
-app.get('/api/health', (_, res) => res.json({ ok: true }));
-(0, init_js_1.initDb)().then(() => {
-    app.listen(PORT, () => {
-        console.log(`Trimers API running on port ${PORT}`);
+let dbReady = false;
+app.get('/api/health', (_, res) => {
+    if (dbReady)
+        return res.json({ ok: true });
+    res.status(503).json({ ok: false, status: 'initializing' });
+});
+app.listen(PORT, () => {
+    console.log(`Trimers API listening on port ${PORT}`);
+    (0, init_js_1.initDb)()
+        .then(() => {
+        dbReady = true;
+        console.log('Database ready');
+    })
+        .catch(err => {
+        console.error('Failed to init DB:', err);
     });
-}).catch(err => {
-    console.error('Failed to init DB:', err);
-    process.exit(1);
 });
