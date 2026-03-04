@@ -18,7 +18,9 @@ type ApiOptions = Omit<RequestInit, 'body'> & {
   body?: object | FormData | BodyInit | null;
 };
 
-export async function api<T>(path: string, opts: ApiOptions = {}): Promise<T> {
+const isRetryable = (status: number) => status === 502 || status === 503 || status === 504;
+
+async function apiFetch<T>(path: string, opts: ApiOptions, retries = 2): Promise<T> {
   const token = getToken();
   const headers: Record<string, string> = {
     Accept: 'application/json',
@@ -27,19 +29,27 @@ export async function api<T>(path: string, opts: ApiOptions = {}): Promise<T> {
   if (token) headers['Authorization'] = `Bearer ${token}`;
   if (!(opts.body instanceof FormData)) headers['Content-Type'] = 'application/json';
 
-  const res = await fetch(`${API}${path}`, {
-    ...opts,
-    headers,
-    body: opts.body instanceof FormData ? opts.body : opts.body != null && typeof opts.body === 'object' && !(opts.body instanceof Blob) && !ArrayBuffer.isView(opts.body as ArrayBufferView) ? JSON.stringify(opts.body) : opts.body as BodyInit | undefined
-  });
+  const body = opts.body instanceof FormData ? opts.body : opts.body != null && typeof opts.body === 'object' && !(opts.body instanceof Blob) && !ArrayBuffer.isView(opts.body as ArrayBufferView) ? JSON.stringify(opts.body) : opts.body as BodyInit | undefined;
 
+  const res = await fetch(`${API}${path}`, { ...opts, headers, body });
   const data = await res.json().catch(() => ({}));
 
   if (!res.ok) {
-    throw new Error(data.error || res.statusText || 'Request failed');
+    if (isRetryable(res.status) && retries > 0) {
+      await new Promise((r) => setTimeout(r, 2000));
+      return apiFetch<T>(path, opts, retries - 1);
+    }
+    const msg = res.status === 503 || res.status === 502
+      ? 'Server is starting up. Please try again in a moment.'
+      : (data.error || res.statusText || 'Request failed');
+    throw new Error(msg);
   }
 
   return data as T;
+}
+
+export async function api<T>(path: string, opts: ApiOptions = {}): Promise<T> {
+  return apiFetch<T>(path, opts);
 }
 
 export const authApi = {
